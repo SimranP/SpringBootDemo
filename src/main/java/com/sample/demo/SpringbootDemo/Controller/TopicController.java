@@ -25,12 +25,12 @@ public class TopicController {
         return topicService.getAllTopics();
     }
 
-//    @GetMapping("/topics/{id}")
-//    public Mono<ResponseEntity<Topic>> getTopicById(@PathVariable(value="id") String topicId) {
-//        return topicService.getTopic(topicId)
-//                .map(topic -> ResponseEntity.ok(topic))
-//                .defaultIfEmpty(ResponseEntity.notFound().build());
-//    }
+    @GetMapping("/topics/{id}")
+    public Mono<ResponseEntity<Topic>> getTopicById(@PathVariable(value="id") String topicId) {
+        return topicService.getTopic(topicId)
+                .map(topic -> ResponseEntity.ok(topic))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
 //
 //    @PostMapping("/topics")
 //    public void createTopic(@RequestBody Topic topic) {

@@ -1,28 +1,32 @@
 package com.sample.demo.SpringbootDemo.Service;
 
 import com.sample.demo.SpringbootDemo.Model.Topic;
+import com.sample.demo.SpringbootDemo.client.TopicClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 @Service
 public class TopicService {
-    private WebClient jsonClient = WebClient.create("http://localhost:3000");
+    @Autowired
+    TopicClient topicClient;
 
     public Flux<Topic> getAllTopics() {
-        return jsonClient.get().uri("/topics").retrieve().bodyToFlux(Topic.class);
+        return topicClient.getTopics();
     }
 
     public Mono<Topic> getTopic(String id) {
-        return  jsonClient.get().uri("/topics").retrieve().bodyToFlux(Topic.class)
-                .filter(topic -> topic.getId().equals(id))
-                .next();
+        return  topicClient.getTopic(id);
     }
-//
-//    public Mono<Topic> addTopic(Topic topic) {
-//        Mono<Topic> newTopic = Mono.just(topic);
-//        topics = topics.concatWith(newTopic);
-//        return newTopic;
-//    }
+
+    public Mono<Topic> addTopic(Topic topic) {
+        return topicClient.addTopic(topic);
+    }
+
+    public Mono<Topic> modifyTopic(String id, @Valid Topic topic) {
+        return topicClient.modifyTopic(id, topic);
+    }
 }

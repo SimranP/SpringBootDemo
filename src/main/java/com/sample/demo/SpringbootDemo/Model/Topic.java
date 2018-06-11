@@ -12,6 +12,16 @@ public class Topic {
     private String description;
 
     public Topic() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     public Topic(String id, String name, String description) {
